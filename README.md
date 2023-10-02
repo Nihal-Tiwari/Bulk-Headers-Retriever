@@ -53,7 +53,6 @@ The script retrieves the following security response headers for each website:
 - cross-origin-opener-policy
 - cross-origin-resource-policy
 - cache-control
-- feature-policy
 - permissions-policy
 
 The headers are saved in the specified output file in CSV or JSON format.
