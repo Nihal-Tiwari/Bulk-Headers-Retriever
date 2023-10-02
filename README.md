@@ -9,6 +9,7 @@ This tool allows you to retrieve security response headers from a list of websit
 - [Usage](#usage)
 - [Output](#output)
 - [Examples](#examples)
+- [Contributing](contributing)
 
 ## Prerequisites
 
@@ -70,4 +71,11 @@ python website_security_headers.py input.txt output.json --format json
 - For Default Format (CSV) :
 
 python website_security_headers.py input.txt output.csv
+
+
+## Contributing
+
+Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request or you can reach out to me on my [socials](https://linktr.ee/NihalTiwari). 
+
+
 
