@@ -13,7 +13,6 @@ def get_security_response_headers(url):
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
         }
         
-        # Enable SSL verification (by not specifying verify parameter or setting it to True)
         response = requests.head(url, allow_redirects=True, headers=headers)
         final_url = response.url 
         if response.status_code == 200:
