@@ -1,38 +1,40 @@
 import argparse
 import pandas as pd
 import requests
-import urllib3
 import json
+from urllib.parse import urlparse
+import sys
 
-# Disable SSL warnings
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-# Function to retrieve and return response headers for a given URL with SSL verification disabled
-def get_response_headers_with_disabled_ssl_verification(url):
+# Function to retrieve and return security response headers
+def get_security_response_headers(url):
     try:
-        # Set the user agent header to mimic Google Chrome
+        # Set the user agent header
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
         }
         
-        # Disable SSL verification
-        response = requests.head(url, allow_redirects=True, verify=False, headers=headers)
+        # Enable SSL verification (by not specifying verify parameter or setting it to True)
+        response = requests.head(url, allow_redirects=True, headers=headers)
         final_url = response.url 
         if response.status_code == 200:
-            headers_dict = {}
-
-            specific_headers = [
-                "X-Content-Type-Options",
-                "X-Frame-Options",
-                "Strict-Transport-Security",
-                "Content-Security-Policy",
-                "Referrer-Policy",
-                "Permissions-Policy"
+            # Specify the list of security headers to capture
+            security_headers = [
+                "strict-transport-security",
+                "x-frame-options",
+                "x-content-type-options",
+                "content-security-policy",
+                "x-permitted-cross-domain-policies",
+                "referrer-policy",
+                "clear-site-data",
+                "cross-origin-embedder-policy",
+                "cross-origin-opener-policy",
+                "cross-origin-resource-policy",
+                "cache-control",
+                "permissions-policy"
             ]
-
-            for header_name in specific_headers:
-                header_value = response.headers.get(header_name, "Not set")
-                headers_dict[header_name] = header_value
+            
+            # Capture security response headers
+            headers_dict = {header: response.headers.get(header, "Not set") for header in security_headers}
 
             return final_url, headers_dict
         else:
@@ -49,7 +51,7 @@ def save_to_json(data, output_file):
         json.dump(data, json_file, indent=4)
 
 def main():
-    parser = argparse.ArgumentParser(description="Retrieve website headers and save to a file")
+    parser = argparse.ArgumentParser(description="Retrieve security headers and save to a file")
     parser.add_argument("input_file", help="Path to the input text file containing one website URL per line")
     parser.add_argument("output_file", help="Path to the output file where headers will be saved")
     parser.add_argument("--format", choices=["csv", "json"], default="csv", help="Output format (csv or json, default is csv)")
@@ -67,15 +69,21 @@ def main():
         all_headers = []
 
         for website in websites:
-            url, headers = get_response_headers_with_disabled_ssl_verification(website)
+            url, headers = get_security_response_headers(website)
             all_headers.append({"URL": url, **headers})
+
+            # Real-time printing of progress
+            sys.stdout.write("\rRetrieving security headers... " + website)
+            sys.stdout.flush()
+
+        print("\nSecurity headers retrieved. Saving to file...")
 
         if output_format == "csv":
             save_to_csv(all_headers, output_file)
         elif output_format == "json":
             save_to_json(all_headers, output_file)
 
-        print(f"Headers retrieved and saved to '{output_file}'")
+        print(f"Security headers saved to '{output_file}'")
 
     except FileNotFoundError:
         print(f"File '{input_file}' not found.")
@@ -84,4 +92,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
