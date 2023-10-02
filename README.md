@@ -1,6 +1,6 @@
-# Website Security Headers Retriever Tool
+# Website Security Headers Retrieval Script
 
-This tool allows you to retrieve security response headers from a list of website URLs and save the results to a CSV or JSON file. It is useful for analyzing the security headers of various websites.
+This script allows you to retrieve specific security response headers from a list of website URLs and save the results to a CSV or JSON file. It is useful for analyzing the security headers of various websites.
 
 ## Table of Contents
 
@@ -9,7 +9,7 @@ This tool allows you to retrieve security response headers from a list of websit
 - [Usage](#usage)
 - [Output](#output)
 - [Examples](#examples)
-- [Contributing](contributing)
+- [Contributing](#contributing)
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ Before using this script, make sure you have the following prerequisites install
 
 ## Getting Started
 
-1. Clone this repository to your local machine or download the script file (`RetrieveSecurityHeaders.py`) directly.
+1. Clone this repository to your local machine or download the script file (`website_security_headers.py`) directly.
 2. Install the required Python packages using the command: pip install -r requirements.txt
 
 
