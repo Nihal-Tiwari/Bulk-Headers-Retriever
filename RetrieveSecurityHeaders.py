@@ -72,7 +72,7 @@ def main():
             all_headers.append({"URL": url, **headers})
 
             # Real-time printing of progress
-            sys.stdout.write("\rRetrieving security headers... " + website)
+            sys.stdout.write("\rRetrieving security headers... ")
             sys.stdout.flush()
 
         print("\nSecurity headers retrieved. Saving to file...")
