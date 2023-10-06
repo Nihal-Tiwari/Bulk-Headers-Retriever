@@ -1,6 +1,6 @@
-# Website Security Headers Retrieval Script
+# Website Security Headers Retrieval Tool
 
-This script allows you to retrieve specific security response headers from a list of website URLs and save the results to a CSV or JSON file. It is useful for analyzing the security headers of various websites.
+This tool allows you to retrieve specific security response headers from a list of website URLs and save the results to a CSV or JSON file. It is useful for analyzing the security headers of various websites.
 
 ## Table of Contents
 
@@ -13,7 +13,7 @@ This script allows you to retrieve specific security response headers from a lis
 
 ## Prerequisites
 
-Before using this script, make sure you have the following prerequisites installed:
+Before using this tool, make sure you have the following prerequisites installed:
 
 - Python 3.x
 - Required Python packages (install using `pip install -r requirements.txt`):
@@ -22,13 +22,13 @@ Before using this script, make sure you have the following prerequisites install
 
 ## Getting Started
 
-1. Clone this repository to your local machine or download the script file (`website_security_headers.py`) directly.
+1. Clone this repository to your local machine or download the tool file (`website_security_headers.py`) directly.
 2. Install the required Python packages using the command: pip install -r requirements.txt
 
 
 ## Usage
 
-To use the script, follow these steps:
+To use the tool, follow these steps:
 
 1. Create a text file (`input.txt`) containing one website URL per line that you want to analyze.
 2. Run the RetrieveSecurityHeaders.py with the following command:
@@ -41,7 +41,7 @@ python RetrieveSecurityHeaders.py input.txt output.csv --format csv
 
 ## Output
 
-The script retrieves the following security response headers for each website:
+The tool retrieves the following security response headers for each website:
 
 - strict-transport-security
 - x-frame-options
