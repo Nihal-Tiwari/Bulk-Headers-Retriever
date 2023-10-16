@@ -7,6 +7,7 @@ This tool allows you to retrieve specific security response headers from a list 
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
+- [Optional Feature](#optional-feature)
 - [Output](#output)
 - [Examples](#examples)
 - [Contributing](#contributing)
@@ -39,6 +40,12 @@ python RetrieveSecurityHeaders.py input.txt output.csv --format csv
 - `output.csv`: Path to the output file where headers will be saved. You can change the format to JSON by specifying `--format json`.
 - The default format is CSV.
 
+
+## Optional Feature
+
+For the sites which have SSL issues use `--disable-ssl-verify`. This disables the SSL verification (not recommended).
+
+
 ## Output
 
 The tool retrieves the following security response headers for each website:
@@ -62,15 +69,19 @@ The headers are saved in the specified output file in CSV or JSON format.
 
 - For CSV File:
   
-python website_security_headers.py input.txt output.csv --format csv
+`python website_security_headers.py input.txt output.csv --format csv`
 
 - For JSON file:
   
-python website_security_headers.py input.txt output.json --format json
+`python website_security_headers.py input.txt output.json --format json`
 
 - For Default Format (CSV) :
 
-python website_security_headers.py input.txt output.csv
+`python website_security_headers.py input.txt output.csv`
+
+- For Sites with SSL ISSUES :
+
+`python website_security_headers.py input.txt output.json --format json --diable-ssl-verify`
 
 
 ## Contributing
