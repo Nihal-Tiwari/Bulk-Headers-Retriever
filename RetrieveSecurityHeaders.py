@@ -11,7 +11,7 @@ requests.packages.urllib3.disable_warnings()
 # Function to retrieve and return security response headers
 def get_security_response_headers(url, disable_ssl_verify=False):
     try:
-        # Check if the URL lacks a scheme (http or https) and add "https://"
+        # Check if the URL lacks a scheme (http or https) and add "https://" as the scheme if needed
         parsed_url = urlparse(url)
         if not parsed_url.scheme:
             url = "https://" + url
@@ -24,36 +24,28 @@ def get_security_response_headers(url, disable_ssl_verify=False):
         # Determine whether to verify SSL certificates
         verify_ssl = not disable_ssl_verify
 
-        response = requests.head(url, allow_redirects=True, headers=headers, verify=verify_ssl)
+        response = requests.get(url, allow_redirects=True, headers=headers, verify=verify_ssl)
         final_url = response.url 
         status_code = response.status_code  
 
         # Print the status code
         print(f"URL: {final_url}, Status Code: {status_code}")
 
-        if status_code == 200:
-            # Specify the list of security headers to retrieve
-            security_headers = [
-                "strict-transport-security",
-                "x-frame-options",
-                "x-content-type-options",
-                "content-security-policy",
-                "x-permitted-cross-domain-policies",
-                "referrer-policy",
-                "clear-site-data",
-                "cross-origin-embedder-policy",
-                "cross-origin-opener-policy",
-                "cross-origin-resource-policy",
-                "cache-control",
-                "permissions-policy"
-            ]
+        # Specify the list of security headers to retrieve
+        security_headers = [
+            "X-Content-Type-Options",
+            "X-Frame-Options",
+            "Strict-Transport-Security",
+            "Content-Security-Policy",
+            "Referrer-Policy",
+            "Permissions-Policy"
+        ]
 
-            # Capture security response headers
-            headers_dict = {header: response.headers.get(header, "HEADER_NOT_SET") for header in security_headers}
+        # Capture security response headers regardless of the status code
+        headers_dict = {header: response.headers.get(header, "HEADER_NOT_SET") for header in security_headers}
 
-            return final_url, headers_dict, status_code
-        else:
-            return url, {"Status Code": status_code, "Error": "Failed to fetch headers"}, status_code
+        return final_url, headers_dict, status_code
+
     except requests.exceptions.RequestException as e:
         return url, {"Error": str(e)}, None
 
@@ -86,8 +78,9 @@ def main():
         all_headers = []
 
         for website in websites:
-            url, headers, status_code = get_security_response_headers(website, disable_ssl_verify)
-            entry = {"URL": url, **headers, "Status Code": status_code}
+            original_url = website
+            modified_url, headers, status_code = get_security_response_headers(website, disable_ssl_verify)
+            entry = {"Original URL": original_url, "Modified URL": modified_url, **headers, "Status Code": status_code}
             all_headers.append(entry)
 
             # Real-time printing of progress
